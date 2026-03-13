@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<image schemaversion="7.4" name="openRuyi-RISCV">
+  <description type="system">
+    <author>Han Gao</author>
+    <contact>gaohan@iscas.ac.cn</contact>
+    <specification>openRuyi RISC-V Image</specification>
+  </description>
+
+  <profiles>
+    <profile name="Live" description="Live image of openRuyi RISC-V"/>
+  </profiles>
+
+  <users >
+    
+    <user name="root" id="0" 
+          password="$1$xyz$bK93SeXkJSOeaFfdbGu9f." pwdformat="encrypted"/> 
+    <user name="openruyi" groups="wheel" 
+          password="$1$xyz$bK93SeXkJSOeaFfdbGu9f." pwdformat="encrypted"/> 
+  </users>
+  <preferences>
+    <version>0.0.1</version>
+    <packagemanager>dnf5</packagemanager>
+    <keytable>us</keytable>
+    <timezone>UTC</timezone>
+    <rpm-check-signatures>false</rpm-check-signatures>
+  </preferences>
+
+  <preferences profiles="Live">
+    <type image="oem" efiparttable="gpt" installiso="true" firmware="efi" filesystem="xfs" kernelcmdline="console=ttyS0" efifatimagesize="20" efipartsize="300">
+      <bootloader name="grub2" console="console" timeout="10"/>
+	  <oemconfig>
+	    <oem-resize>true</oem-resize>
+	  </oemconfig>
+      <systemdisk name="vgroup" preferlvm="true">
+        <volume name="@root"/>
+      </systemdisk>
+    </type>
+  </preferences>
+  <repository type="rpm-md" alias="openruyi">
+    <source path="https://diamond.oerv.ac.cn//openruyi/riscv64/"/>
+  </repository>
+
+  <packages type="image" patternType="plusRecommended" >
+    <package name="kexec-tools"/>
+    <package name="NetworkManager"/>
+    <package name="amd-gpu-firmware" />
+    <package name="amd-ucode-firmware" />
+    <package name="authselect" />
+    <package name="bash"/>
+    <package name="bash-completion" />
+    <package name="ca-certificates"/>
+    <package name="cockpit-system" />
+    <package name="cpio" />
+    <package name="cracklib"/>
+    <package name="cracklib-dicts"/>
+    <package name="dnf5"/>
+    <package name="grub"/>
+    <package name="htop"/>
+    <package name="iproute2"/>
+    <package name="kbd"/>
+    <package name="kmod-libs"/>
+    <package name="less" />
+    <package name="libpwquality" />
+    <package name="libseccomp"/>
+    <package name="linux"/>
+    <package name="nano"/>
+    <package name="openRuyi-release"/>
+    <package name="openRuyi-repos" />
+    <package name="openresolv" />
+    <package name="openssh-server"/>
+    <package name="realtek-firmware" />
+    <package name="sudo" />
+    <package name="sudo"/>
+    <package name="which" />
+    <package name="xfsprogs" />
+    <package name="util-linux" />
+  </packages>
+
+  <packages type="image" profiles="Live">
+    <package name="dracut-kiwi-oem-repart"/>
+    <package name="dracut-kiwi-oem-dump"/>
+  </packages>
+
+  <packages type="bootstrap">
+    <package name="dnf5"/>
+    <package name="shadow"/>
+    <package name="glibc"/>
+    <package name="coreutils"/>
+    <package name="ca-certificates"/>
+    <package name="ca-certificates-mozilla"/>
+  </packages>
+</image>
