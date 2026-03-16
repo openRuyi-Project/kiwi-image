@@ -6,6 +6,7 @@
     <specification>openRuyi RISC-V Image</specification>
   </description>
 
+  <!-- OBS-Profiles: installiso -->
   <profiles>
     <profile name="installiso" description="installiso image of openRuyi RISC-V"/>
   </profiles>
@@ -36,11 +37,7 @@
       </systemdisk>
     </type>
   </preferences>
-  <repository type="rpm-md" alias="openruyi">
-    <source path="https://diamond.oerv.ac.cn//openruyi/riscv64/"/>
-  </repository>
-
-  <packages type="image" patternType="plusRecommended" >
+  <packages type="image">
     <package name="kexec-tools"/>
     <package name="NetworkManager"/>
     <package name="amd-gpu-firmware" />
