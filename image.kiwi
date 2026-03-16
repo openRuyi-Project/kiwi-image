@@ -37,6 +37,10 @@
       </systemdisk>
     </type>
   </preferences>
+
+  <repository type="rpm-md" alias="openruyi">
+    <source path="obsrepositories:/"/>
+  </repository>
   <packages type="image">
     <package name="kexec-tools"/>
     <package name="NetworkManager"/>
