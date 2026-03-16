@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <image schemaversion="7.4" name="openRuyi-RISCV">
   <description type="system">
-    <author>Han Gao</author>
-    <contact>gaohan@iscas.ac.cn</contact>
+    <author>zheng junjie</author>
+    <contact>zhengjunjie@iscas.ac.cn</contact>
     <specification>openRuyi RISC-V Image</specification>
   </description>
 
