@@ -10,6 +10,5 @@ baseService systemd-boot-update.service off
 # XXX: should adjust systemd file.
 baseService systemd-homed.service off
 baseService systemd-networkd-presistent-storage.service off
-systemctl daemon-reload
 kernel-install add-all
 systemctl preset-all
