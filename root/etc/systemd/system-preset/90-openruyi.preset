@@ -1,3 +1,6 @@
+disable systemd-boot-update.*
+disable systemd-homed.service.*
+disable systemd-networkd-presistent-storage.*
 disable systemd-timesyncd.service
 disable systemd-networkd.service
 disable systemd-networkd-wait-online.service
@@ -23,6 +26,3 @@ enable cups.path
 enable rsyslog.*
 enable syslog-ng.*
 enable sysklogd.*
-disable systemd-boot-update.service
-disable systemd-homed.service off
-disable systemd-networkd-presistent-storage.service off
