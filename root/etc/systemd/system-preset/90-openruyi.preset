@@ -1,0 +1,28 @@
+disable systemd-timesyncd.service
+disable systemd-networkd.service
+disable systemd-networkd-wait-online.service
+disable systemd-boot-update.service
+enable systemd-resolved.service
+enable systemd-oomd.service
+enable dbus.socket
+enable dbus-broker.service
+enable sshd.service
+enable atd.*
+enable crond.*
+enable chronyd.service
+enable NetworkManager.service
+enable NetworkManager-wait-online.service
+enable NetworkManager-dispatcher.service
+enable ModemManager.service
+enable auditd.service
+enable restorecond.service
+enable bluetooth.*
+enable avahi-daemon.*
+enable cups.socket
+enable cups.path
+enable rsyslog.*
+enable syslog-ng.*
+enable sysklogd.*
+disable systemd-boot-update.service
+disable systemd-homed.service off
+disable systemd-networkd-presistent-storage.service off
