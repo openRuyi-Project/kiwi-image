@@ -1,6 +1,6 @@
 disable systemd-boot-update.*
 disable systemd-homed.*
-disable systemd-networkd-presistent-storage.*
+disable systemd-networkd-persistent-storage.*
 disable systemd-timesyncd.service
 disable systemd-networkd.service
 disable systemd-networkd-wait-online.service
