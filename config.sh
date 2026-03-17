@@ -11,3 +11,4 @@ baseService systemd-boot-update.service off
 baseService systemd-homed.service off
 baseService systemd-networkd-presistent-storage.service off
 kernel-install add-all
+systemctl preset-all
