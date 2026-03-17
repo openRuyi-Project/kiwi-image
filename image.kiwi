@@ -32,6 +32,9 @@
 	  <oemconfig>
 	    <oem-resize>true</oem-resize>
 	  </oemconfig>
+      <systemdisk name="vgroup" preferlvm="true">
+        <volume name="@root"/>
+      </systemdisk>
     </type>
   </preferences>
 
