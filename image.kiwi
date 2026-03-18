@@ -42,6 +42,7 @@
     <source path="obsrepositories:/"/>
   </repository>
   <packages type="image">
+    <package name="glibc-locale-base"/>
     <package name="systemd-timesyncd"/>
     <package name="systemd-resolved"/>
     <package name="kexec-tools"/>
