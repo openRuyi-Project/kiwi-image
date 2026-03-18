@@ -43,6 +43,7 @@
   </repository>
   <packages type="image">
     <package name="systemd-timesyncd"/>
+    <package name="systemd-resolved"/>
     <package name="kexec-tools"/>
     <package name="NetworkManager"/>
     <package name="amd-gpu-firmware" />
