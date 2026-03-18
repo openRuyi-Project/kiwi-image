@@ -42,6 +42,7 @@
     <source path="obsrepositories:/"/>
   </repository>
   <packages type="image">
+    <package name="systemd-timesyncd"/>
     <package name="kexec-tools"/>
     <package name="NetworkManager"/>
     <package name="amd-gpu-firmware" />
