@@ -27,7 +27,7 @@
   </preferences>
 
   <preferences profiles="installiso">
-    <type format="qcow2" image="oem" eficsm="false" efiparttable="gpt" installiso="true" firmware="efi" filesystem="xfs" kernelcmdline="console=ttyS0 audit=0" efifatimagesize="20" efipartsize="300">
+    <type format="qcow2" image="oem" eficsm="false" efiparttable="gpt" installiso="true" firmware="efi" filesystem="xfs" kernelcmdline="audit=0" efifatimagesize="20" efipartsize="300">
       <bootloader name="grub2" console="console" timeout="10"/>
 	  <oemconfig>
 	    <oem-resize>true</oem-resize>
