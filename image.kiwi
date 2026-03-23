@@ -81,6 +81,7 @@
   </packages>
 
   <packages type="image" profiles="installiso">
+    <package name="openruyi-systemd-default-preset-server"/>
     <package name="dracut-kiwi-oem-repart"/>
     <package name="dracut-kiwi-oem-dump"/>
   </packages>
