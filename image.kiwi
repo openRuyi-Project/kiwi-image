@@ -3,12 +3,12 @@
   <description type="system">
     <author>zheng junjie</author>
     <contact>zhengjunjie@iscas.ac.cn</contact>
-    <specification>openRuyi RISC-V Image</specification>
+    <specification>openRuyi Image</specification>
   </description>
 
   <!-- OBS-Profiles: installiso -->
   <profiles>
-    <profile name="installiso" description="installiso image of openRuyi RISC-V"/>
+    <profile name="installiso" description="installiso image of openRuyi"/>
   </profiles>
 
   <users >
