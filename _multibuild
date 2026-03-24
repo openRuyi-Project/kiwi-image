@@ -1,0 +1,4 @@
+<multibuild>
+  <flavor>installiso</flavor>
+  <flavor>livecd</flavor>
+</multibuild>

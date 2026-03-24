@@ -6,17 +6,24 @@
     <specification>openRuyi Image</specification>
   </description>
 
-  <!-- OBS-Profiles: installiso -->
+  <!-- OBS-Profiles: @BUILD_FLAVOR@ -->
   <profiles>
     <profile name="installiso" description="installiso image of openRuyi"/>
+    <profile name="livecd"     description="livecd image of openRuyi"/>
   </profiles>
 
-  <users >
-    
+  <users>
     <user name="root" id="0" 
           password="$1$xyz$bK93SeXkJSOeaFfdbGu9f." pwdformat="encrypted"/> 
-    <user name="openruyi" groups="wheel" 
-          password="$1$xyz$bK93SeXkJSOeaFfdbGu9f." pwdformat="encrypted"/> 
+  </users>
+
+  <users profiles="livecd">
+    <user name="openruyi" groups="wheel"
+          password="" pwdformat="plain"/>
+  </users>
+  <users profiles="installiso">
+    <user name="openruyi" groups="wheel"
+          password="$1$xyz$bK93SeXkJSOeaFfdbGu9f." pwdformat="encrypted"/>
   </users>
   <preferences>
     <version>0.0.1</version>
@@ -40,9 +47,21 @@
     </type>
   </preferences>
 
+  <preferences profiles="livecd">
+    <type image="iso" flags="overlay" primary="true" kernelcmdline="loglevel=3 audit=0" efifatimagesize="30">
+      <bootloader name="grub2" console="console" timeout="10"/>
+    </type>
+  </preferences>
+
   <repository type="rpm-md" alias="openruyi">
     <source path="obsrepositories:/"/>
   </repository>
+  <packages type="image">
+    <package name="dbus-common"/>
+  </packages>
+  <packages type="image">
+    <package name="dbus-common"/>
+  </packages>
   <packages type="image">
     <package name="glibc-locale-base"/>
     <package name="systemd-timesyncd"/>
@@ -86,6 +105,14 @@
     <package name="openruyi-systemd-default-preset-server"/>
     <package name="dracut-kiwi-oem-repart"/>
     <package name="dracut-kiwi-oem-dump"/>
+  </packages>
+
+  <packages type="image" profiles="livecd">
+    <package name="openruyi-systemd-default-preset-desktop"/>
+    <package name="openruyi-desktop-setup-labwc"/>
+    <package name="dracut-kiwi-live"/>
+    <package name="sddm"/>
+    <package name="calamares"/>
   </packages>
 
   <packages type="bootstrap">
