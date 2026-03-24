@@ -68,8 +68,8 @@
     <package name="libseccomp"/>
     <package name="linux"/>
     <package name="nano"/>
-    <package name="openRuyi-release"/>
-    <package name="openRuyi-repos" />
+    <package name="system-release"/>
+    <package name="system-repos" />
     <package name="openresolv" />
     <package name="openssh-server"/>
     <package name="realtek-firmware" />
