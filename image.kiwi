@@ -99,6 +99,7 @@
     <package name="which" />
     <package name="xfsprogs" />
     <package name="util-linux" />
+    <package name="procps-ng"/>
   </packages>
 
   <packages type="image" profiles="installiso">

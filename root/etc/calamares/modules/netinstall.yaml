@@ -50,6 +50,7 @@
     # archivers
     - unzip
     - zip
+    - procps-ng
 - name: "disk"
   description: "Tools for disk"
   selected: false
