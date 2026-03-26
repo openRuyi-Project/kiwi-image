@@ -31,6 +31,7 @@
       <bootloader name="grub2" console="console" timeout="10"/>
 	  <oemconfig>
 	    <oem-resize>true</oem-resize>
+        <oem-skip-verify>true</oem-skip-verify>
 	  </oemconfig>
       <systemdisk name="vgroup" preferlvm="true">
         <volume name="@root" size="all"/>
