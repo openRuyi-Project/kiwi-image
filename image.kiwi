@@ -71,6 +71,7 @@
     <package name="amd-gpu-firmware" />
     <package name="amd-ucode-firmware" />
     <package name="authselect" />
+    <package name="openruyi-authselect-profiles" />
     <package name="bash"/>
     <package name="bash-completion" />
     <package name="ca-certificates"/>
