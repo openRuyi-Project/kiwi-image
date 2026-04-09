@@ -18,11 +18,11 @@
   </users>
 
   <users profiles="livecd">
-    <user name="openruyi" groups="wheel"
+    <user name="openruyi" groups="openruyi,wheel"
           password="" pwdformat="plain"/>
   </users>
   <users profiles="installiso">
-    <user name="openruyi" groups="wheel"
+    <user name="openruyi" groups="openruyi,wheel"
           password="$1$xyz$bK93SeXkJSOeaFfdbGu9f." pwdformat="encrypted"/>
   </users>
   <preferences>
