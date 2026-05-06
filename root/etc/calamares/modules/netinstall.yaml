@@ -60,6 +60,46 @@
     - dosfstools
     - e2fsprogs
     - gptfdisk
+- name: "language"
+  description: "Default install languages"
+  selected: false
+  critical: false
+  packages:
+    - langpacks-eo
+    - langpacks-cs
+    - langpacks-fr
+    - langpacks-de
+    - langpacks-fi
+    - langpacks-el
+    - langpacks-da
+    - langpacks-id
+    - langpacks-bg
+    - langpacks-ia
+    - langpacks-ca
+    - langpacks-hu
+    - langpacks-be
+    - langpacks-hr
+    - langpacks-es
+    - langpacks-ko
+    - langpacks-it
+    - langpacks-ka
+    - langpacks-pl
+    - langpacks-nl
+    - langpacks-lt
+    - langpacks-ja
+    - langpacks-nb
+    - langpacks-sr
+    - langpacks-rw
+    - langpacks-sl
+    - langpacks-ro
+    - langpacks-pt
+    - langpacks-ru
+    - langpacks-sv
+    - langpacks-sk
+    - langpacks-uk
+    - langpacks-vi
+    - langpacks-zh
+    - langpacks-tr
 - name: "Wireless"
   description: "Tools for wireless connections"
   critical: false
