@@ -51,6 +51,7 @@
     <type image="iso" flags="overlay" primary="true" kernelcmdline="loglevel=3 audit=0" efifatimagesize="30">
       <bootloader name="grub2" console="console" timeout="10"/>
     </type>
+    <locale>zh_CN</locale>
   </preferences>
 
   <repository type="rpm-md" alias="openruyi">
