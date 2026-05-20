@@ -69,6 +69,9 @@
     <package name="NetworkManager"/>
     <package name="amd-gpu-firmware" />
     <package name="amd-ucode-firmware" />
+    <package name="iputils"/>
+    <package name="cloud-utils-growpart"/>
+    <package name="hostname"/>
     <package name="authselect" />
     <package name="openruyi-authselect-profiles" />
     <package name="bash"/>
