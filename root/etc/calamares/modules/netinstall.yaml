@@ -112,6 +112,7 @@
   packages:
     - openruyi-systemd-default-preset-desktop
     - openruyi-desktop-setup-labwc
+    - openruyi-desktop-setup-kde
     - labwc
     - sddm
     - waybar

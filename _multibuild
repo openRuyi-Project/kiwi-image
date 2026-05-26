@@ -1,4 +1,5 @@
 <multibuild>
   <flavor>installiso</flavor>
   <flavor>livecd</flavor>
+  <flavor>livecd_kde</flavor>
 </multibuild>

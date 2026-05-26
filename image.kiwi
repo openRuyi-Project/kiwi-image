@@ -10,6 +10,7 @@
   <profiles>
     <profile name="installiso" description="installiso image of openRuyi"/>
     <profile name="livecd"     description="livecd image of openRuyi"/>
+    <profile name="livecd_kde" description="kde livecd image of openRuyi"/>
   </profiles>
 
   <users>
@@ -18,6 +19,10 @@
   </users>
 
   <users profiles="livecd">
+    <user name="openruyi" groups="openruyi,wheel"
+          password="" pwdformat="plain"/>
+  </users>
+  <users profiles="livecd_kde">
     <user name="openruyi" groups="openruyi,wheel"
           password="" pwdformat="plain"/>
   </users>
@@ -48,7 +53,11 @@
     <type image="iso" flags="overlay" primary="true" kernelcmdline="loglevel=3 audit=0" efifatimagesize="30">
       <bootloader name="grub2" console="console" timeout="10"/>
     </type>
-    <locale>zh_CN</locale>
+  </preferences>
+  <preferences profiles="livecd_kde">
+    <type image="iso" flags="overlay" primary="true" kernelcmdline="loglevel=3 audit=0" efifatimagesize="30">
+      <bootloader name="grub2" console="console" timeout="10"/>
+    </type>
   </preferences>
 
   <repository type="rpm-md" alias="openruyi">
@@ -104,6 +113,9 @@
   <packages type="image" profiles="livecd" patternType="plusRecommended">
     <package name="langpacks-zh"/>
   </packages>
+  <packages type="image" profiles="livecd_kde" patternType="plusRecommended">
+    <package name="langpacks-zh"/>
+  </packages>
 
   <packages type="image" profiles="livecd">
     <package name="openruyi-systemd-default-preset-desktop"/>
@@ -111,6 +123,19 @@
     <package name="dracut-kiwi-live"/>
     <package name="sddm"/>
     <package name="calamares"/>
+  </packages>
+  <packages type="image" profiles="livecd_kde">
+    <package name="openruyi-systemd-default-preset-desktop"/>
+    <package name="openruyi-desktop-setup-kde"/>
+    <package name="dracut-kiwi-live"/>
+    <package name="sddm"/>
+    <package name="plasma-session"/>
+    <package name="calamares"/>
+    <package name="wayland-utils"/>
+    <package name="mesa-demos"/>
+    <package name="firefox"/>
+    <package name="konsole"/>
+    <package name="discover"/>
   </packages>
 
   <packages type="bootstrap">
