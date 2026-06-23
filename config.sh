@@ -48,4 +48,10 @@ else
     rm -rf /etc/calamares
     rm -rf /etc/polkit-1/rules.d/00-installer.rules
     rm -rf /usr/local/share/applications/calamares.desktop
+    mkdir -p /etc/repart.d
+    cat > /etc/repart.d/50-root.conf <<EOF
+[Partition]
+Type=root
+GrowFileSystem=yes
+EOF
 fi

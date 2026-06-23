@@ -39,7 +39,8 @@
   </preferences>
 
   <preferences profiles="installiso">
-    <type format="qcow2" image="oem" eficsm="false" efiparttable="gpt" installiso="true" firmware="efi" filesystem="xfs" kernelcmdline="loglevel=3 audit=0" efifatimagesize="20" efipartsize="300" bootpartsize="1024">
+    <type format="qcow2" image="oem" eficsm="false" efiparttable="gpt" installiso="true" firmware="efi" filesystem="xfs" kernelcmdline="loglevel=3 audit=0" efifatimagesize="20" efipartsize="300" bootpartsize="1024"
+          fsmountoptions="defaults,x-systemd.growfs">
       <bootloader name="grub2" console="console" timeout="10"/>
 	  <oemconfig>
 	    <oem-resize>true</oem-resize>
@@ -108,6 +109,7 @@
     <package name="openruyi-systemd-default-preset-server"/>
     <package name="dracut-kiwi-oem-repart"/>
     <package name="dracut-kiwi-oem-dump"/>
+    <package name="systemd-repart"/>
   </packages>
 
   <packages type="image" profiles="livecd" patternType="plusRecommended">
