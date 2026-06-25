@@ -43,7 +43,7 @@ LC_TIME=zh_CN.UTF-8
 LANGUAGE=zh_CN:en_US
 EOF
     chown openruyi:openruyi /home/openruyi/.config/plasma-localerc
-else
+elif [[ "$kiwi_profiles" == "installiso" ]]; then
     echo "other, not use /etc/calamares and sddm autologin"
     rm -rf /etc/calamares
     rm -rf /etc/polkit-1/rules.d/00-installer.rules
@@ -54,4 +54,16 @@ else
 Type=root
 GrowFileSystem=yes
 EOF
+
+mkdir -p /etc/cloud/cloud.cfg.d/
+    cat > /etc/cloud/cloud.cfg.d/90_datasource.cfg <<EOF
+datasource_list: [ NoCloud, ConfigDirve, OpenStack, Ec2 ]
+EOF
+
+# enable cloud-init
+    baseService cloud-init-main on
+    baseService cloud-init-local on
+    baseService cloud-init-network on
+    baseService cloud-config on
+    baseService cloud-final on
 fi

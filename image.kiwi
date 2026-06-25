@@ -110,6 +110,7 @@
     <package name="dracut-kiwi-oem-repart"/>
     <package name="dracut-kiwi-oem-dump"/>
     <package name="systemd-repart"/>
+    <package name="cloud-init"/>
   </packages>
 
   <packages type="image" profiles="livecd" patternType="plusRecommended">
