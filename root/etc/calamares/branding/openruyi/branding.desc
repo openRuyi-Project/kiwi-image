@@ -163,7 +163,7 @@ strings:
 # These filenames can also use substitutions from os-release (see above).
 images:
     # productBanner:       "banner.png"
-    productIcon:         "openRuyi.svg"
+    productIcon:         "openRuyi.png"
     productLogo:         "openRuyi-261x261.svg"
     # productWallpaper:    "wallpaper.png"
     productWelcome:      "languages.png"
