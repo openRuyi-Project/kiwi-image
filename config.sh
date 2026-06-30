@@ -43,6 +43,10 @@ LC_TIME=zh_CN.UTF-8
 LANGUAGE=zh_CN:en_US
 EOF
     chown openruyi:openruyi /home/openruyi/.config/plasma-localerc
+    mkdir -p /home/openruyi/桌面
+    chown openruyi:openruyi /home/openruyi/桌面/
+    ln -s /usr/local/share/applications/calamares.desktop /home/openruyi/桌面/calamares.desktop
+    chown openruyi:openruyi /home/openruyi/桌面/calamares.desktop
 elif [[ "$kiwi_profiles" == "installiso" ]]; then
     echo "other, not use /etc/calamares and sddm autologin"
     rm -rf /etc/calamares
