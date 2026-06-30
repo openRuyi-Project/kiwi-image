@@ -115,9 +115,11 @@
 
   <packages type="image" profiles="livecd" patternType="plusRecommended">
     <package name="langpacks-zh"/>
+    <package name="openruyi-logo"/>
   </packages>
   <packages type="image" profiles="livecd_kde" patternType="plusRecommended">
     <package name="langpacks-zh"/>
+    <package name="openruyi-logo"/>
   </packages>
 
   <packages type="image" profiles="livecd">
