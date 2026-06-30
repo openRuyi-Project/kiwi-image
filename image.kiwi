@@ -31,7 +31,7 @@
           password="$1$xyz$bK93SeXkJSOeaFfdbGu9f." pwdformat="encrypted"/>
   </users>
   <preferences>
-    <version>2026.05.28</version>
+    <version>2026.06.30</version>
     <packagemanager>dnf5</packagemanager>
     <keytable>us</keytable>
     <timezone>UTC</timezone>
