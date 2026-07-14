@@ -71,12 +71,15 @@
     <package name="dbus-common"/>
   </packages>
   <packages type="image">
+    <package name="efibootmgr"/>
     <package name="system-minimal"/>
     <package name="glibc-locale-base"/>
     <package name="systemd-timesyncd"/>
     <package name="systemd-resolved"/>
     <package name="kexec-tools"/>
     <package name="NetworkManager"/>
+    <package name="NetworkManager-tui"/>
+    <package name="NetworkManager-plugins"/>
     <package name="amd-gpu-firmware" />
     <package name="amd-ucode-firmware" />
     <package name="iputils"/>
@@ -99,13 +102,16 @@
     <package name="openresolv" />
     <package name="openssh-server"/>
     <package name="realtek-firmware"/>
+    <package name="iwlwifi-firmware"/>
     <package name="which" />
     <package name="xfsprogs" />
     <package name="util-linux" />
     <package name="procps-ng"/>
+    <package name="wpa_supplicant"/>
   </packages>
 
   <packages type="image" profiles="installiso">
+    <package name="gnupg"/>
     <package name="openruyi-systemd-default-preset-server"/>
     <package name="dracut-kiwi-oem-repart"/>
     <package name="dracut-kiwi-oem-dump"/>

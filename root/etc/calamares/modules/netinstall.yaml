@@ -13,6 +13,7 @@
     - authselect
     - openruyi-authselect-profiles
     - NetworkManager
+    - gnupg
     - grub
     - shadow
     - less
