@@ -49,6 +49,7 @@ EOF
     chown openruyi:openruyi /home/openruyi/桌面/calamares.desktop
 elif [[ "$kiwi_profiles" == "installiso" ]]; then
     echo "other, not use /etc/calamares and sddm autologin"
+    rm -rf /etc/machine-id
     rm -rf /etc/calamares
     rm -rf /etc/polkit-1/rules.d/00-installer.rules
     rm -rf /usr/local/share/applications/calamares.desktop
@@ -70,4 +71,10 @@ EOF
     baseService cloud-init-network on
     baseService cloud-config on
     baseService cloud-final on
+    mkdir -p /etc/systemd/system/systemd-firstboot.service.d
+    cat > /etc/systemd/system/systemd-firstboot.service.d/install.conf <<EOF
+[Install]
+WantedBy=sysinit.target
+EOF
+    baseService systemd-firstboot on
 fi
