@@ -103,6 +103,7 @@
     <package name="openssh-server"/>
     <package name="realtek-firmware"/>
     <package name="iwlwifi-firmware"/>
+    <package name="linux-firmware"/>
     <package name="which" />
     <package name="xfsprogs" />
     <package name="util-linux" />
