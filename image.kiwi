@@ -39,7 +39,7 @@
   </preferences>
 
   <preferences profiles="installiso">
-    <type format="qcow2" image="oem" eficsm="false" efiparttable="gpt" installiso="true" firmware="efi" filesystem="xfs" kernelcmdline="loglevel=3 audit=0" efifatimagesize="20" efipartsize="300" bootpartsize="1024"
+    <type format="qcow2" image="oem" eficsm="false" efiparttable="gpt" installiso="true" firmware="efi" filesystem="xfs" kernelcmdline="loglevel=3 audit=0 rw" efifatimagesize="20" efipartsize="300" bootpartsize="1024"
           fsmountoptions="defaults,x-systemd.growfs">
       <bootloader name="grub2" console="console" timeout="10"/>
 	  <oemconfig>
@@ -51,12 +51,12 @@
   </preferences>
 
   <preferences profiles="livecd">
-    <type image="iso" flags="overlay" primary="true" kernelcmdline="loglevel=3 audit=0" efifatimagesize="30">
+    <type image="iso" flags="overlay" primary="true" kernelcmdline="loglevel=3 audit=0 rw" efifatimagesize="30">
       <bootloader name="grub2" console="console" timeout="10"/>
     </type>
   </preferences>
   <preferences profiles="livecd_kde">
-    <type image="iso" flags="overlay" primary="true" kernelcmdline="loglevel=3 audit=0" efifatimagesize="30">
+    <type image="iso" flags="overlay" primary="true" kernelcmdline="loglevel=3 audit=0 rw" efifatimagesize="30">
       <bootloader name="grub2" console="console" timeout="10"/>
     </type>
   </preferences>
