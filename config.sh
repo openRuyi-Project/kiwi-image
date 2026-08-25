@@ -60,6 +60,12 @@ Type=root
 GrowFileSystem=yes
 EOF
 
+mkdir -p /etc/systemd/system/systemd-repart.service.d
+cat > /etc/systemd/system/systemd-repart.service.d/firstboot.conf <<EOF
+[Unit]
+ConditionFirstBoot=yes
+EOF
+
 mkdir -p /etc/cloud/cloud.cfg.d/
     cat > /etc/cloud/cloud.cfg.d/90_datasource.cfg <<EOF
 datasource_list: [ NoCloud, ConfigDirve, OpenStack, Ec2 ]
