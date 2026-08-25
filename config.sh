@@ -70,13 +70,14 @@ mkdir -p /etc/cloud/cloud.cfg.d/
     cat > /etc/cloud/cloud.cfg.d/90_datasource.cfg <<EOF
 datasource_list: [ NoCloud, ConfigDirve, OpenStack, Ec2 ]
 EOF
-
-# enable cloud-init
-    baseService cloud-init-main on
-    baseService cloud-init-local on
-    baseService cloud-init-network on
-    baseService cloud-config on
-    baseService cloud-final on
+mkdir -p /etc/systemd/system-preset
+cat > /etc/systemd/system-preset/85-cloud-init.preset <<EOF
+enable cloud-init-main.service
+enable cloud-init-local.service
+enable cloud-init-network.service
+enable cloud-config.service
+enable cloud-final.service
+EOF
     mkdir -p /etc/systemd/system/systemd-firstboot.service.d
     cat > /etc/systemd/system/systemd-firstboot.service.d/install.conf <<EOF
 [Install]
