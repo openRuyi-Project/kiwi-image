@@ -112,6 +112,7 @@
     <package name="util-linux" />
     <package name="procps-ng"/>
     <package name="wpa_supplicant"/>
+    <package name="perl"/>
   </packages>
 
   <packages type="image" profiles="installiso">
