@@ -5,6 +5,7 @@
   immutable: true
   packages:
     - openruyi-systemd-default-preset
+    - openruyi-config-linux-dnf
     - systemd-udev
     - systemd
     - systemd-timesyncd

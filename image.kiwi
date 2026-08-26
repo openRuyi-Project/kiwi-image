@@ -118,6 +118,7 @@
   <packages type="image" profiles="installiso">
     <package name="gnupg"/>
     <package name="openruyi-systemd-default-preset-server"/>
+    <package name="openruyi-config-linux-dnf"/>
     <package name="dracut-kiwi-oem-repart"/>
     <package name="dracut-kiwi-oem-dump"/>
     <package name="systemd-repart"/>
