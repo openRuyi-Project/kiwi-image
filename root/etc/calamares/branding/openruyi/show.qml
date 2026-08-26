@@ -32,7 +32,7 @@ Presentation
 
         Image {
             id: background
-            source: "openRuyi.svg"
+            source: "/usr/share/icons/hicolor/scalable/apps/openRuyi.svg"
             width: 200; height: 200
             fillMode: Image.PreserveAspectFit
             anchors.centerIn: parent
