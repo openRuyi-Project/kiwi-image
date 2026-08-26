@@ -13,6 +13,7 @@
     - efibootmgr
     - authselect
     - openruyi-authselect-profiles
+    - openruyi-logo
     - NetworkManager
     - gnupg
     - grub
