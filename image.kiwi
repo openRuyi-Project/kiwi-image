@@ -70,7 +70,7 @@
   <packages type="image">
     <package name="dbus-common"/>
   </packages>
-  <packages type="image">
+  <packages type="image" patternType="plusRecommended">
     <package name="efibootmgr"/>
     <package name="unzip" />
     <package name="zstd" />
