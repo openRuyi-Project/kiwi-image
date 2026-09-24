@@ -51,6 +51,8 @@
     - bash-completion
     - nano
     - openssh
+    - openssh-client
+    - openssh-server
     - sudo
     # archivers
     - unzip
