@@ -1,0 +1,170 @@
+# GitHub Action: 构建 openRuyi Kiwi 镜像（riscv64 / RVA23）
+#
+# 目标架构: riscv64，且需要支持 RVA23 profile（Vector V1.0 + Zv* crypto 等扩展）。
+#
+# 两种构建模式（按 runner 自动选择）:
+#   1. QEMU 模拟（默认 ubuntu-latest，x86_64 runner）
+#      - 用 docker/setup-qemu-action 注册 riscv64 binfmt
+#      - 通过 QEMU_CPU=max 让模拟器启用全部扩展（含 RVA23 所需 V / Zv*）
+#   2. 原生 riscv64 runner（真机，最可靠）
+#      - 在设置了仓库变量 BUILD_RUNNER（如 "self-hosted"）的自托管 riscv64
+#        机器上构建，原生支持 RVA23，无需 QEMU 模拟
+#
+# 构建产物:
+#   - installiso:  QCOW2 安装镜像 (OEM)
+#   - livecd:      LiveCD ISO（Labwc 桌面）
+#   - livecd_kde:  LiveCD ISO（KDE Plasma 桌面）
+
+name: Build Kiwi Images
+
+on:
+  push:
+    branches: ["master", "obs"]
+    tags: ["v*"]
+  pull_request:
+    branches: ["master", "obs"]
+  workflow_dispatch:
+    inputs:
+      profile:
+        description: "构建类型"
+        required: true
+        default: all
+        type: choice
+        options:
+          - all
+          - installiso
+          - livecd
+          - livecd_kde
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  # RVA23 支持：让 QEMU 使用 "max" CPU（启用所有扩展，含 V / Zv* / zicond 等）。
+  # 若你的 QEMU 版本较老，可改为具体特性串，例如:
+  #   QEMU_CPU: rv64,rvv=true,rvv_ta_all_1s=true,rvv_ma_all_1s=true
+  QEMU_CPU: max
+
+jobs:
+  build:
+    # 默认 ubuntu-26.04（QEMU 较新，RVA23/Vector 支持更好）；
+    # 在仓库 Settings -> Secrets and variables -> Actions
+    # 设置变量 BUILD_RUNNER（如 self-hosted）即可切到 riscv64 原生 runner
+    runs-on: ${{ vars.BUILD_RUNNER || 'ubuntu-26.04' }}
+    strategy:
+      fail-fast: false
+      matrix:
+        profile: ${{ (github.event_name == 'workflow_dispatch' && github.event.inputs.profile != 'all' && fromJSON(format('["{0}"]', github.event.inputs.profile))) || '["installiso", "livecd", "livecd_kde"]' }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # 判断当前 runner 是否为 x86_64/arm 模拟（需要 QEMU），还是原生 riscv64
+      - name: Detect build mode
+        id: detect
+        run: |
+          # github.repository 可能含大写字母（如 Z572/repo），而镜像名必须全小写
+          REPO_LC="${GITHUB_REPOSITORY,,}"
+          echo "BUILDER_IMAGE=ghcr.io/${REPO_LC}/kiwi-builder" >> "$GITHUB_ENV"
+          echo "Computed BUILDER_IMAGE=ghcr.io/${REPO_LC}/kiwi-builder"
+
+          case "$RUNNER_ARCH" in
+            X64|ARM|ARM64)
+              echo "USE_QEMU=true" >> "$GITHUB_ENV"
+              echo "Emitted USE_QEMU=true"
+              ;;
+            *)
+              echo "USE_QEMU=false" >> "$GITHUB_ENV"
+              echo "Detected native riscv64 runner (RVA23), skip QEMU"
+              ;;
+          esac
+
+      # 安装 Docker（原生 riscv64 runner 很可能未装 Docker）
+      - name: Install Docker
+        uses: docker/setup-docker-action@v4
+
+      # 仅在模拟模式下，注册 riscv64 QEMU binfmt
+      - name: Set up QEMU for riscv64
+        if: env.USE_QEMU == 'true'
+        uses: docker/setup-qemu-action@v3
+        with:
+          platforms: linux/riscv64
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # 构建 riscv64 kiwi-builder 镜像。QEMU_CPU=max 保证模拟器启用 RVA23 扩展
+      # 注意：不 push 到 GHCR，因为 PR 的 GITHUB_TOKEN 无权向组织包写入。
+      # 用 --load 载入本地 + gha 缓存即可满足后续 kiwi-ng build 的需要。
+      - name: Build kiwi-builder image (riscv64)
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: Dockerfile
+          platforms: linux/riscv64
+          load: true
+          push: false
+          tags: ${{ env.BUILDER_IMAGE }}:${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      # kiwi 需要特权模式（--privileged）以挂载 loop 设备、创建文件系统等
+      # 原生 riscv64 runner 时不需要 --platform（本身即 riscv64）
+      - name: Build Kiwi image (${{ matrix.profile }})
+        run: |
+          mkdir -p output
+          PLATFORM_ARG=""
+          if [ "$USE_QEMU" = "true" ]; then
+            PLATFORM_ARG="--platform linux/riscv64"
+          fi
+          docker run --rm --privileged $PLATFORM_ARG \
+            -v /dev:/dev \
+            -v "$PWD:/workspace:Z" \
+            -v "$PWD/output:/workspace/output:Z" \
+            "${{ env.BUILDER_IMAGE }}:${{ github.sha }}" \
+            --profile "${{ matrix.profile }}" \
+            system build \
+            --description /workspace \
+            --target-dir /workspace/output
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: openruyi-${{ matrix.profile }}-${{ github.sha }}
+          path: |
+            output/*.iso
+            output/*.raw
+            output/*.qcow2
+            output/*.changes
+            output/*.packages
+            output/*.verified
+          compression-level: 0
+          retention-days: 14
+
+  # 仅当推送 tag v* 时执行：下载所有产物并发布 Release
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: build
+    runs-on: ubuntu-26.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Collect release files
+        run: |
+          mkdir -p release
+          find artifacts/ -type f \( -iname "*.iso" -o -iname "*.qcow2" -o -iname "*.raw" -o -iname "*.xz" \) \
+            -exec cp -v {} release/ \;
+          echo "=== Release artifacts ==="
+          ls -lh release/
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: release/*
+          generate_release_notes: true
