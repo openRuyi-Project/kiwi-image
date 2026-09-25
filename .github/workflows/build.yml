@@ -138,7 +138,6 @@ jobs:
             output/*.changes
             output/*.packages
             output/*.verified
-          compression-level: 0
           retention-days: 14
 
   # 仅当推送 tag v* 时执行：下载所有产物并发布 Release
