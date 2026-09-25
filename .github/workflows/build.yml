@@ -55,8 +55,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        profile: ${{ (github.event_name == 'workflow_dispatch' && github.event.inputs.profile != 'all' && fromJSON(format('["{0}"]', github.event.inputs.profile))) || '["installiso", "livecd", "livecd_kde"]' }}
-
+        profile: ${{ fromJSON(github.event_name == 'workflow_dispatch' && github.event.inputs.profile != 'all' && format('["{0}"]', github.event.inputs.profile) || '["installiso","livecd","livecd_kde"]') }}
     steps:
       - uses: actions/checkout@v4
 
