@@ -57,13 +57,20 @@ jobs:
       matrix:
         profile: ${{ fromJSON(github.event_name == 'workflow_dispatch' && github.event.inputs.profile != 'all' && format('["{0}"]', github.event.inputs.profile) || '["installiso","livecd","livecd_kde"]') }}
     steps:
+      - uses: jlumbroso/free-disk-space@v2.0.0
+        with:
+          android: true
+          dotnet: true
+          haskell: true
+          large-packages: true
+          swap: true
       - uses: actions/checkout@v4
 
       # 判断当前 runner 是否为 x86_64/arm 模拟（需要 QEMU），还是原生 riscv64
       - name: Detect build mode
         id: detect
         run: |
-          # github.repository 可能含大写字母（如 Z572/repo），而镜像名必须全小写
+          # github.repository 可能含大写字母，而镜像名必须全小写
           REPO_LC="${GITHUB_REPOSITORY,,}"
           echo "BUILDER_IMAGE=ghcr.io/${REPO_LC}/kiwi-builder" >> "$GITHUB_ENV"
           echo "Computed BUILDER_IMAGE=ghcr.io/${REPO_LC}/kiwi-builder"
