@@ -13,6 +13,9 @@ systemctl preset-all
 baseService systemd-boot-update.service off
 update-ca-trust
 dnf reinstall dbus -y
+
+rpm --import /usr/share/pki/rpm-gpg/RPM-GPG-KEY-openruyi* || true
+
 if [[ "$kiwi_profiles" == "livecd" ]]; then
     echo "livecd"
     if [ -f /etc/sddm.conf ]; then
