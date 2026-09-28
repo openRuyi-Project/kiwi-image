@@ -4,6 +4,7 @@
   critical: true
   immutable: true
   packages:
+    - openruyi-minimal
     - openruyi-systemd-default-preset
     - openruyi-config-linux-dnf
     - systemd-udev
