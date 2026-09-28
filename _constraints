@@ -1,0 +1,8 @@
+<constraints>
+  <overwrite>
+    <conditions>
+      <arch>riscv64</arch>
+     </conditions>
+    <hostlabel exclude="true">SPACEMIT_K3</hostlabel>
+  </overwrite>
+</constraints>
