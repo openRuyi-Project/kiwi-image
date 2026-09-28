@@ -140,8 +140,10 @@
     <package name="dracut-kiwi-live"/>
     <package name="sddm"/>
     <package name="calamares"/>
+    <package name="gnupg"/>
   </packages>
   <packages type="image" profiles="livecd_kde">
+    <package name="gnupg"/>
     <package name="openruyi-systemd-default-preset-desktop"/>
     <package name="openruyi-desktop-setup-kde"/>
     <package name="dracut-kiwi-live"/>
