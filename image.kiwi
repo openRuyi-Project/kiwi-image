@@ -62,7 +62,7 @@
   </preferences>
 
   <repository type="rpm-md" alias="openruyi">
-    <source path="https://repo.build.openruyi.cn/openruyi/riscv64/"/>
+    <source path="https://boat.openruyi.cn/stable/rva20/"/>
   </repository>
   <packages type="image">
     <package name="dbus-common"/>
