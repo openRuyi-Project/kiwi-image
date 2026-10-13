@@ -23,6 +23,8 @@ on:
     tags: ["v*"]
   pull_request:
     branches: ["main", "obs"]
+  schedule:
+    - cron: '0 0 * * 1'
   workflow_dispatch:
     inputs:
       profile:
