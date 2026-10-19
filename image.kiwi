@@ -75,7 +75,7 @@
     <package name="unzip" />
     <package name="zstd" />
     <package name="tar" />
-    <package name="system-minimal"/>
+    <package name="openruyi-minimal-systemd"/>
     <package name="glibc-locale-base"/>
     <package name="systemd-timesyncd"/>
     <package name="systemd-resolved"/>
