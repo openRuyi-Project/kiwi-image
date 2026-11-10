@@ -7,6 +7,7 @@ if [[ "$kiwi_profiles" == "installiso" ]]; then
     cat > /etc/dracut.conf.d/70-openruyi-installiso.conf <<EOF
 hostonly="no"
 hostonly_cmdline="no"
+add_dracutmodules+="drm"
 EOF
 fi
 
