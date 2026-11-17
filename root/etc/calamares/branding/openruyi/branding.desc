@@ -123,10 +123,10 @@ navigation: widget
 strings:
     productName:         "${NAME}"
     shortProductName:    openruyi
-    version:             Creek
-    shortVersion:        Creek
-    versionedName:       openRuyi GNU/Linux "Creek"
-    shortVersionedName:  openRuyi Creek
+    version:             26.11
+    shortVersion:        "${VERSION}"
+    versionedName:       openRuyi GNU/Linux "${VERSION}"
+    shortVersionedName:  openRuyi "${VERSION}"
     bootloaderEntryName: openruyi
     productUrl:          https://www.openruyi.cn
     supportUrl:          https://github.com/openRuyi-project/openruyi/issues

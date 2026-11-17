@@ -123,6 +123,7 @@
     <package name="dracut-kiwi-oem-dump"/>
     <package name="systemd-repart"/>
     <package name="cloud-init"/>
+    <package name="fastfetch"/>
   </packages>
 
   <packages type="image" profiles="livecd" patternType="plusRecommended">
@@ -155,6 +156,7 @@
     <package name="firefox"/>
     <package name="konsole"/>
     <package name="discover"/>
+    <package name="fastfetch"/>
   </packages>
 
   <packages type="bootstrap">
