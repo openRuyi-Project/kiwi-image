@@ -135,17 +135,33 @@ jobs:
             system build \
             --description /workspace \
             --target-dir /workspace/output
+
+      - name: Bundle Kiwi image (${{ matrix.profile }})
+        run: |
+          PLATFORM_ARG=""
+          if [ "$USE_QEMU" = "true" ]; then
+            PLATFORM_ARG="--platform linux/riscv64"
+          fi
+
+          docker run --rm --privileged $PLATFORM_ARG \
+            -v /dev:/dev \
+            -v "$PWD:/workspace:Z" \
+            -v "$PWD/output:/workspace/output:Z" \
+            "${{ env.BUILDER_IMAGE }}:${{ github.sha }}" \
+            result bundle \
+            --target-dir /workspace/output \
+            --bundle-dir /workspace/output/bundle \
+            --id "${{ matrix.profile }}" \
+            --bundle-format '%N-%I.%A-%v'
+
+          echo "=== Bundle files ==="
+          ls -lh output/bundle/
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
           name: openruyi-${{ matrix.profile }}-${{ github.sha }}
           path: |
-            output/*.iso
-            output/*.raw
-            output/*.qcow2
-            output/*.changes
-            output/*.packages
-            output/*.verified
+            output/bundle/*
           retention-days: 14
 
   # 仅当推送 tag v* 时执行：下载所有产物并发布 Release
@@ -167,7 +183,12 @@ jobs:
       - name: Collect release files
         run: |
           mkdir -p release
-          find artifacts/ -type f \( -iname "*.iso" -o -iname "*.qcow2" -o -iname "*.raw" -o -iname "*.xz" \) \
+
+          # 不收集 .raw：raw 若存在，result bundle 会生成 .raw.xz。
+          # 避免 GitHub Release 单文件超过 2 GiB 的限制。
+          find artifacts/ -type f \
+            \( -iname "*.iso" -o -iname "*.qcow2" -o -iname "*.xz" \
+               -o -iname "*.sha256" -o -iname "*.packages" -o -iname "*.verified" \) \
             -exec cp -v {} release/ \;
           echo "=== Release artifacts ==="
           ls -lh release/
