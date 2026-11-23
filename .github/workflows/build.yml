@@ -37,6 +37,15 @@ on:
           - installiso
           - livecd
           - livecd_kde
+      variant:
+        description: "variant"
+        required: true
+        default: all
+        type: choice
+        options:
+          - all
+          - rva20
+          - rva23
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -58,6 +67,7 @@ jobs:
       fail-fast: false
       matrix:
         profile: ${{ fromJSON(github.event_name == 'workflow_dispatch' && github.event.inputs.profile != 'all' && format('["{0}"]', github.event.inputs.profile) || '["installiso","livecd","livecd_kde"]') }}
+        variant: ${{ fromJSON(github.event_name == 'workflow_dispatch' && github.event.inputs.variant != 'all' && format('["{0}"]', github.event.inputs.variant) || '["rva20","rva23"]') }}
     steps:
       - uses: jlumbroso/free-disk-space@v2.0.0
         with:
@@ -119,7 +129,7 @@ jobs:
 
       # kiwi 需要特权模式（--privileged）以挂载 loop 设备、创建文件系统等
       # 原生 riscv64 runner 时不需要 --platform（本身即 riscv64）
-      - name: Build Kiwi image (${{ matrix.profile }})
+      - name: Build Kiwi image (${{ matrix.profile }} ${{ matrix.variant }})
         run: |
           mkdir -p output
           PLATFORM_ARG=""
@@ -132,11 +142,12 @@ jobs:
             -v "$PWD/output:/workspace/output:Z" \
             "${{ env.BUILDER_IMAGE }}:${{ github.sha }}" \
             --profile "${{ matrix.profile }}" \
+            --profile "${{ matrix.variant }}" \
             system build \
             --description /workspace \
             --target-dir /workspace/output
 
-      - name: Bundle Kiwi image (${{ matrix.profile }})
+      - name: Bundle Kiwi image (${{ matrix.profile }}-${{ matrix.variant }})
         run: |
           PLATFORM_ARG=""
           if [ "$USE_QEMU" = "true" ]; then
@@ -151,15 +162,15 @@ jobs:
             result bundle \
             --target-dir /workspace/output \
             --bundle-dir /workspace/output/bundle \
-            --id "${{ matrix.profile }}" \
-            --bundle-format '%N-%I.%A-%v'
+            --id "${{ matrix.profile }}-${{ matrix.variant }}" \
+            --bundle-format '%N-%P.%A-%v'
 
           echo "=== Bundle files ==="
           ls -lh output/bundle/
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: openruyi-${{ matrix.profile }}-${{ github.sha }}
+          name: openruyi-${{ matrix.profile }}-${{ matrix.variant }}-${{ github.sha }}
           path: |
             output/bundle/*
           retention-days: 14
