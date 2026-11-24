@@ -1,4 +1,5 @@
-FROM ghcr.io/openruyi-project/creek:latest
+ARG BASE_IMAGE=ghcr.io/openruyi-project/creek:latest
+FROM ${BASE_IMAGE}
 RUN dnf update -y
 RUN dnf install -y kiwi  kiwi-systemdeps-image-validation kiwi-systemdeps-filesystems kiwi-systemdeps-disk-images kiwi-systemdeps-iso-media glibc-gconv-modules-extra
 RUN dnf install -y kiwi btrfs-progs xz git rpm-build systemd-container systemd-boot python-pefile xfsprogs

@@ -13,6 +13,7 @@
     <profile name="livecd_kde" description="kde livecd image of openRuyi"/>
     <profile name="rva20"      description="Use rva20"/>
     <profile name="rva23"      description="Use rva23"/>
+    <profile name="x86_64"     description="Use x86_64"/>
   </profiles>
 
   <users>
@@ -68,6 +69,9 @@
   </repository>
   <repository arch="riscv64" type="rpm-md" alias="openruyi-rva20" profiles="rva20">
     <source path="https://repo.build.openruyi.cn/openruyi/rva20/"/>
+  </repository>
+  <repository arch="x86_64" type="rpm-md" alias="openruyi-x86_64" profiles="x86_64">
+    <source path="https://repo.build.openruyi.cn/openruyi/x86_64/"/>
   </repository>
   <packages type="image">
     <package name="dbus-common"/>

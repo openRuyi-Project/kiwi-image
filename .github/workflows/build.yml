@@ -46,6 +46,7 @@ on:
           - all
           - rva20
           - rva23
+          - x86_64
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -67,7 +68,7 @@ jobs:
       fail-fast: false
       matrix:
         profile: ${{ fromJSON(github.event_name == 'workflow_dispatch' && github.event.inputs.profile != 'all' && format('["{0}"]', github.event.inputs.profile) || '["installiso","livecd","livecd_kde"]') }}
-        variant: ${{ fromJSON(github.event_name == 'workflow_dispatch' && github.event.inputs.variant != 'all' && format('["{0}"]', github.event.inputs.variant) || '["rva20","rva23"]') }}
+        variant: ${{ fromJSON(github.event_name == 'workflow_dispatch' && github.event.inputs.variant != 'all' && format('["{0}"]', github.event.inputs.variant) || '["rva20","rva23","x86_64"]') }}
     steps:
       - uses: jlumbroso/free-disk-space@v2.0.0
         with:
@@ -86,11 +87,26 @@ jobs:
           REPO_LC="${GITHUB_REPOSITORY,,}"
           echo "BUILDER_IMAGE=ghcr.io/${REPO_LC}/kiwi-builder" >> "$GITHUB_ENV"
           echo "Computed BUILDER_IMAGE=ghcr.io/${REPO_LC}/kiwi-builder"
-
+          case "${{ matrix.variant }}" in
+            x86_64)
+              echo "BASE_IMAGE=ghcr.io/openruyi-project/creek-x86_64:latest" >> "$GITHUB_ENV"
+              echo "DOCKER_PLATFORMS=linux/amd64" >> "$GITHUB_ENV"
+              ;;
+            *)
+              echo "BASE_IMAGE=ghcr.io/openruyi-project/creek:latest" >> "$GITHUB_ENV"
+              echo "DOCKER_PLATFORMS=linux/riscv64" >> "$GITHUB_ENV"
+              ;;
+          esac
           case "$RUNNER_ARCH" in
             X64|ARM|ARM64)
-              echo "USE_QEMU=true" >> "$GITHUB_ENV"
-              echo "Emitted USE_QEMU=true"
+              case "${{ matrix.variant }}" in
+               riscv64|rva20)
+                 echo "USE_QEMU=true" >> "$GITHUB_ENV"
+                 echo "Emitted USE_QEMU=true"
+                 ;;
+               *)
+               ;;
+              esac
               ;;
             *)
               echo "USE_QEMU=false" >> "$GITHUB_ENV"
@@ -107,7 +123,7 @@ jobs:
         if: env.USE_QEMU == 'true'
         uses: docker/setup-qemu-action@v3
         with:
-          platforms: linux/riscv64
+          platforms: ${{ env.DOCKER_PLATFORMS }}
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -115,15 +131,17 @@ jobs:
       # 构建 riscv64 kiwi-builder 镜像。QEMU_CPU=max 保证模拟器启用 RVA23 扩展
       # 注意：不 push 到 GHCR，因为 PR 的 GITHUB_TOKEN 无权向组织包写入。
       # 用 --load 载入本地 + gha 缓存即可满足后续 kiwi-ng build 的需要。
-      - name: Build kiwi-builder image (riscv64)
+      - name: Build kiwi-builder image (${{ matrix.profile }} ${{ matrix.variant }})
         uses: docker/build-push-action@v6
         with:
           context: .
           file: Dockerfile
-          platforms: linux/riscv64
+          platforms: ${{ env.DOCKER_PLATFORMS }}
           load: true
           push: false
           tags: ${{ env.BUILDER_IMAGE }}:${{ github.sha }}
+          build-args: |
+            BASE_IMAGE=${{ env.BASE_IMAGE }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -132,10 +150,7 @@ jobs:
       - name: Build Kiwi image (${{ matrix.profile }} ${{ matrix.variant }})
         run: |
           mkdir -p output
-          PLATFORM_ARG=""
-          if [ "$USE_QEMU" = "true" ]; then
-            PLATFORM_ARG="--platform linux/riscv64"
-          fi
+          PLATFORM_ARG="--platform ${{ env.DOCKER_PLATFORMS }}"
           docker run --rm --privileged $PLATFORM_ARG \
             -v /dev:/dev \
             -v "$PWD:/workspace:Z" \
@@ -149,11 +164,7 @@ jobs:
 
       - name: Bundle Kiwi image (${{ matrix.profile }}-${{ matrix.variant }})
         run: |
-          PLATFORM_ARG=""
-          if [ "$USE_QEMU" = "true" ]; then
-            PLATFORM_ARG="--platform linux/riscv64"
-          fi
-
+          PLATFORM_ARG="--platform ${{ env.DOCKER_PLATFORMS }}"
           docker run --rm --privileged $PLATFORM_ARG \
             -v /dev:/dev \
             -v "$PWD:/workspace:Z" \
