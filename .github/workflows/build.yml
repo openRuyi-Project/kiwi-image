@@ -19,7 +19,6 @@ name: Build Kiwi Images
 
 on:
   push:
-    branches: ["main", "obs"]
     tags: ["v*"]
   pull_request:
     branches: ["main", "obs"]
