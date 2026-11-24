@@ -53,12 +53,12 @@
   </preferences>
 
   <preferences profiles="livecd">
-    <type image="iso" flags="overlay" primary="true" kernelcmdline="loglevel=3 audit=0 rw" efifatimagesize="30">
+    <type image="iso" flags="overlay" primary="true" kernelcmdline="loglevel=3 audit=0 rw" efifatimagesize="30" firmware="efi" eficsm="false" efiparttable="gpt">
       <bootloader name="grub2" console="console" timeout="10"/>
     </type>
   </preferences>
   <preferences profiles="livecd_kde">
-    <type image="iso" flags="overlay" primary="true" kernelcmdline="loglevel=3 audit=0 rw" efifatimagesize="30">
+    <type image="iso" flags="overlay" primary="true" kernelcmdline="loglevel=3 audit=0 rw" efifatimagesize="30" firmware="efi" eficsm="false" efiparttable="gpt">
       <bootloader name="grub2" console="console" timeout="10"/>
     </type>
   </preferences>
