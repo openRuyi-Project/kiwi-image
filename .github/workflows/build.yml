@@ -99,7 +99,7 @@ jobs:
           case "$RUNNER_ARCH" in
             X64|ARM|ARM64)
               case "${{ matrix.variant }}" in
-               riscv64|rva20)
+               rva20|rva23)
                  echo "USE_QEMU=true" >> "$GITHUB_ENV"
                  echo "Emitted USE_QEMU=true"
                  ;;
