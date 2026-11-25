@@ -16,13 +16,13 @@ dnf reinstall dbus -y
 
 rpm --import /usr/share/pki/rpm-gpg/RPM-GPG-KEY-openruyi* || true
 
-if [[ "$kiwi_profiles" == "livecd" ]]; then
+if [[ "$kiwi_profiles" == *"livecd"* ]]; then
     echo "livecd"
     if [ -f /etc/sddm.conf ]; then
         echo -e '[Autologin]\nUser=openruyi\nSession=labwc\n' >> /etc/sddm.conf
     fi
     echo "WLR_NO_HARDWARE_CURSORS=1" >> /etc/environment
-elif [[ "$kiwi_profiles" == "livecd_kde" ]]; then
+elif [[ "$kiwi_profiles" == *"livecd_kde"* ]]; then
     echo "livecd_kde"
     if [ -f /etc/sddm.conf ]; then
         echo -e '[Autologin]\nUser=openruyi\nSession=plasmawayland\n' >> /etc/sddm.conf
@@ -50,7 +50,7 @@ EOF
     chown openruyi:openruyi /home/openruyi/桌面/
     ln -s /usr/local/share/applications/calamares.desktop /home/openruyi/桌面/calamares.desktop
     chown openruyi:openruyi /home/openruyi/桌面/calamares.desktop
-elif [[ "$kiwi_profiles" == "installiso" ]]; then
+elif [[ "$kiwi_profiles" == *"installiso"* ]]; then
     echo "other, not use /etc/calamares and sddm autologin"
     rm -rf /etc/machine-id
     rm -rf /etc/calamares
